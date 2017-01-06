@@ -34,20 +34,18 @@ class InitialPage extends Component {
     return (
       <ScrollView
         contentContainerStyle={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', padding: 20}}>
-        <TextInput
-          style={{ height: 40, width: 200, borderWidth: 1, textAlign: 'center'}}
-          placeholder="Address of focus" // TODO: center placeholder text
-          onChangeText={(text) => this.setState({text})}
-        />
-        <TextInput
-          style={{ height: 40, width: 200, borderWidth: 1, textAlign: 'center'}}
-          placeholder="Minutes to travel?" 
-          onChangeText={(text) => this.setState({text})}
-        /> 
-        
-            
-       </View>
+        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', padding: 20}}>
+          <TextInput
+            style={{ height: 40, width: 200, borderWidth: 1, textAlign: 'center'}}
+            placeholder="Address of focus" // TODO: center placeholder text
+            onChangeText={(text) => this.setState({text})}
+          />
+          <TextInput
+            style={{ height: 40, width: 200, borderWidth: 1, textAlign: 'center'}}
+            placeholder="Minutes to travel?" 
+            onChangeText={(text) => this.setState({text})}
+          /> 
+        </View>
         <Picker /* TODO: Figure out why this does and doesn't work */
           style={styles.picker}
           selectedValue={this.state.pickerValue}
@@ -57,14 +55,12 @@ class InitialPage extends Component {
           <Picker.Item label="Public" value="public" />
           <Picker.Item label="Bike" value="bike" />
         </Picker>
-          <TouchableHighlight
+        <TouchableHighlight
             onPress={this.gotoNext.bind(this)}
           style={{padding: 40}} >
           <Text style={{color: 'red'}}>submit</Text>
         </TouchableHighlight>  
-         </ScrollView>     
-              
-            
+      </ScrollView>           
     );
   }
   gotoNext() {
@@ -77,7 +73,13 @@ class InitialPage extends Component {
 
 var NavigationBarRouteMapper = {
   LeftButton(route, navigator, index, navState) {
-    return null;
+
+   <TouchableOpacity style={{flex: 1, justifyContent: 'center'}}
+          onPress={() => navigator.parentNavigator.pop()}>
+        <Text style={{color: 'white', margin: 10,}}>
+          return 2
+        </Text>
+      </TouchableOpacity>
   },
   RightButton(route, navigator, index, navState) {
     return null;
