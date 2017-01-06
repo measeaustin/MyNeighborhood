@@ -1,37 +1,65 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
+'use strict';
 
 import React, { Component } from 'react';
 import {
   AppRegistry,
   StyleSheet,
   Text,
-  View
+  TextInput,
+  View,
+  Navigator,
+  Picker,
+  TouchableOpacity,
+  TouchableHighlight
 } from 'react-native';
 
-export default class MyNeighborhoodApp extends Component {
+var InitialPage = require('./InitialPage');
+var SubmitPage = require('./SubmitPage');
+
+class App extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
+      <Navigator
+          initialRoute={{id: 'InitialPage', name: 'Index'}}
+          renderScene={this.renderScene.bind(this)}
+          configureScene={(route) => {
+            if (route.sceneConfig) {
+              return route.sceneConfig;
+            }
+            return Navigator.SceneConfigs.FloatFromRight;
+          }} />
+    );
+  }
+  renderScene(route, navigator) {
+    var routeId = route.id;
+    if (routeId === 'InitialPage') {
+      return (
+        <InitialPage
+          navigator={navigator} />
+      );
+    }
+    if (routeId === 'SubmitPage') {
+      return (
+        <SubmitPage
+          navigator={navigator} />
+      );
+    }
+    return this.noRoute(navigator);
+
+  }
+  noRoute(navigator) {
+    return (
+      <View style={{flex: 1, alignItems: 'stretch', justifyContent: 'center'}}>
+        <TouchableOpacity style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}
+            onPress={() => navigator.pop()}>
+          <Text style={{color: 'red', fontWeight: 'bold'}}>Configure the route for this page in the renderScene of index.js</Text>
+        </TouchableOpacity>
       </View>
     );
   }
 }
 
-const styles = StyleSheet.create({
+var styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -50,4 +78,4 @@ const styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent('MyNeighborhoodApp', () => MyNeighborhoodApp);
+AppRegistry.registerComponent('MyNeighborhoodApp', () => App);
